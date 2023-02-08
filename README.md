@@ -2,7 +2,7 @@
 
 From the [SELECT](https://select.dev) team, a dbt package to automatically tag dbt-issued queries with informative metadata. Example metadata is:
 
-```
+```json
 {
     "dbt_snowflake_query_tags_version": "1.0.0",
     "app": "dbt",
