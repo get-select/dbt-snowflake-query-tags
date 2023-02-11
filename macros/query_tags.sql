@@ -24,6 +24,12 @@
         is_incremental=is_incremental(),
     ) -%}
 
+    {%- if model.refs is defined -%}
+        {%- do tag_dict.update(
+            node_refs=model.refs
+        ) -%}
+    {%- endif -%}
+
     {# dbt Cloud stuff #}
     {%- if env_var('DBT_CLOUD_PROJECT_ID', False) -%}
         {%- do tag_dict.update(
