@@ -20,6 +20,7 @@
         node_schema=model.schema,
         node_id=model.unique_id,
         node_resource_type=model.resource_type,
+        node_refs=model.refs,
         materialized=model.config.materialized,
         is_incremental=is_incremental(),
     ) -%}
