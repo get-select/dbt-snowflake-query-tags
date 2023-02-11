@@ -20,10 +20,15 @@
         node_schema=model.schema,
         node_id=model.unique_id,
         node_resource_type=model.resource_type,
-        node_refs=model.refs,
         materialized=model.config.materialized,
         is_incremental=is_incremental(),
     ) -%}
+
+    {%- if model.refs is defined -%}
+        {%- do tag_dict.update(
+            node_refs=model.refs
+        ) -%}
+    {%- endif -%}
 
     {# dbt Cloud stuff #}
     {%- if env_var('DBT_CLOUD_PROJECT_ID', False) -%}
