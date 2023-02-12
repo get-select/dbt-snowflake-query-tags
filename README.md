@@ -23,12 +23,8 @@ From the [SELECT](https://select.dev) team, a dbt package to automatically tag d
     "materialized": "incremental",
     "is_incremental": true,
     "node_refs": [
-        [
-            "raw_orders"
-        ],
-        [
-            "product_mapping"
-        ]
+        "raw_orders",
+        "product_mapping"
     ]
 }
 ```
