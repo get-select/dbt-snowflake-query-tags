@@ -58,7 +58,6 @@ packages:
 
 3. If you're running dbt >= 1.2 then you can add dispatching to your `dbt_project.yml`
 ```yaml
-
 dispatch:
   - macro_namespace: dbt
     search_order:
