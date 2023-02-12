@@ -44,7 +44,7 @@ packages:
     version: 1.0.0
 ```
 
-2. If it doesn't already exist, create a folder named `macros` in your dbt project's top level directory. Inside, make a new file called `query_tags.sql` with the following content:
+2. If you're running dbt < 1.2 then you'll need to override this using local macros. If it doesn't already exist, create a folder named `macros` in your dbt project's top level directory. Inside, make a new file called `query_tags.sql` with the following content:
 
 ```sql
 {% macro set_query_tag() -%}
@@ -54,6 +54,17 @@ packages:
 {% macro unset_query_tag(original_query_tag) -%}
 {% do return(dbt_snowflake_query_tags.unset_query_tag(original_query_tag)) %}
 {% endmacro %}
+```
+
+3. If you're running dbt >= 1.2 then you can add dispatching to your `dbt_project.yml`
+```yaml
+
+dispatch:
+  - macro_namespace: dbt
+    search_order:
+      - <YOUR_PROJECT_NAME>
+      - dbt_snowflake_query_tags
+      - dbt
 ```
 
 That's it! All dbt-issued queries will now be tagged.
