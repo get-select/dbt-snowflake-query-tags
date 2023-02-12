@@ -4,7 +4,7 @@ From the [SELECT](https://select.dev) team, a dbt package to automatically tag d
 
 ```json
 {
-    "dbt_snowflake_query_tags_version": "1.0.0",
+    "dbt_snowflake_query_tags_version": "1.1.0",
     "app": "dbt",
     "dbt_version": "1.4.0",
     "project_name": "my_project",
@@ -21,7 +21,15 @@ From the [SELECT](https://select.dev) team, a dbt package to automatically tag d
     "node_id": "model.my_project.orders",
     "node_resource_type": "model",
     "materialized": "incremental",
-    "is_incremental": true
+    "is_incremental": true,
+    "node_refs": [
+        [
+            "raw_orders"
+        ],
+        [
+            "product_mapping"
+        ]
+    ]
 }
 ```
 
