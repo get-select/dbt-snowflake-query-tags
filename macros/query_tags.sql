@@ -1,5 +1,5 @@
 {% macro set_query_tag() -%}
-  {{ return(adapter.dispatch('set_query_tag', 'common')()) }}
+    {{ return(adapter.dispatch('set_query_tag', 'dbt_snowflake_query_tags')()) }}
 {%- endmacro %}
 
 {% macro default__set_query_tag() -%}
