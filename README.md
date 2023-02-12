@@ -4,7 +4,7 @@ From the [SELECT](https://select.dev) team, a dbt package to automatically tag d
 
 ```json
 {
-    "dbt_snowflake_query_tags_version": "1.1.0",
+    "dbt_snowflake_query_tags_version": "1.1.1",
     "app": "dbt",
     "dbt_version": "1.4.0",
     "project_name": "my_project",
@@ -45,7 +45,7 @@ dbt_cloud_run_reason
 ```yaml
 packages:
   - package: get-select/dbt_snowflake_query_tags
-    version: 1.0.0
+    version: 1.1.1
 ```
 
 2. If it doesn't already exist, create a folder named `macros` in your dbt project's top level directory. Inside, make a new file called `query_tags.sql` with the following content:
