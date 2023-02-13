@@ -29,12 +29,13 @@
     ) -%}
 
     {%- if model.refs is defined -%}
-        {%- do tag_dict.update(
-            node_refs=[]
-        ) -%}
+        {% set refs = [] %}
         {% for ref in model.refs %}
-            {%- do tag_dict.node_refs.append(ref[0]) -%}
+            {%- do refs.append(ref[0]) -%}
         {% endfor %}
+        {%- do tag_dict.update(
+            node_refs=refs | unique | list
+        ) -%}
     {%- endif -%}
 
     {# dbt Cloud stuff #}
