@@ -8,7 +8,7 @@
 
     {# Regardless of resource type, we can always access the config via the 'model' variable #}
     {%- do tag_dict.update(
-        dbt_snowflake_query_tags_version='1.1.2',
+        dbt_snowflake_query_tags_version='1.1.3',
         app='dbt',
         dbt_version=dbt_version,
         project_name=project_name,
