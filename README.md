@@ -4,7 +4,7 @@ From the [SELECT](https://select.dev) team, a dbt package to automatically tag d
 
 ```json
 {
-    "dbt_snowflake_query_tags_version": "1.1.1",
+    "dbt_snowflake_query_tags_version": "1.1.3",
     "app": "dbt",
     "dbt_version": "1.4.0",
     "project_name": "my_project",
