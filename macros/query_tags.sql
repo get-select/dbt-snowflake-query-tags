@@ -1,4 +1,8 @@
 {% macro set_query_tag() -%}
+    {{ return(adapter.dispatch('set_query_tag', 'dbt_snowflake_query_tags')()) }}
+{%- endmacro %}
+
+{% macro default__set_query_tag() -%}
     {# Start with any model-configured dict #}
     {% set tag_dict = config.get('query_tag', default={}) %}
 
@@ -68,6 +72,10 @@
 {% endmacro %}
 
 {% macro unset_query_tag(original_query_tag) -%}
+    {{ return(adapter.dispatch('unset_query_tag', 'dbt_snowflake_query_tags')(original_query_tag)) }}
+{%- endmacro %}
+
+{% macro default__unset_query_tag(original_query_tag) -%}
     {% if original_query_tag %}
     {{ log("Resetting query_tag to '" ~ original_query_tag ~ "'.") }}
     {% do run_query("alter session set query_tag = '{}'".format(original_query_tag)) %}

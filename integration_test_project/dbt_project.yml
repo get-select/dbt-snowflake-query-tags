@@ -3,3 +3,11 @@ version: '1.0.0'
 config-version: 2
 
 profile: dbt_snowflake_query_tags_tests
+
+
+dispatch:
+  - macro_namespace: dbt
+    search_order:
+      - dbt_snowflake_query_tags_tests
+      - dbt_snowflake_query_tags
+      - dbt
