@@ -48,7 +48,9 @@ packages:
     version: 1.1.1
 ```
 
-2. If you're running dbt < 1.2 then you'll need to override this using local macros. If it doesn't already exist, create a folder named `macros` in your dbt project's top level directory. Inside, make a new file called `query_tags.sql` with the following content:
+2. Adding the macros
+
+Option 1: If running dbt < 1.2, create a folder named `macros` in your dbt project's top level directory (if it doesn't exist). Inside, make a new file called `query_tags.sql` with the following content:
 
 ```sql
 {% macro set_query_tag() -%}
@@ -60,7 +62,8 @@ packages:
 {% endmacro %}
 ```
 
-3. If you're running dbt >= 1.2 then you can add dispatching to your `dbt_project.yml`
+Option 2: If running dbt >= 1.2, you can simply configure the dispatch search order in your `dbt_project.yml`.
+
 ```yaml
 dispatch:
   - macro_namespace: dbt
