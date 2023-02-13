@@ -45,7 +45,7 @@ dbt_cloud_run_reason
 ```yaml
 packages:
   - package: get-select/dbt_snowflake_query_tags
-    version: 1.1.2
+    version: 1.1.3
 ```
 
 2. Adding the macros

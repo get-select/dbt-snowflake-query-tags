@@ -8,7 +8,7 @@
 
     {# Regardless of resource type, we can always access the config via the 'model' variable #}
     {%- do tag_dict.update(
-        dbt_snowflake_query_tags_version='1.1.2',
+        dbt_snowflake_query_tags_version='1.1.3',
         app='dbt',
         dbt_version=dbt_version,
         project_name=project_name,
@@ -29,12 +29,13 @@
     ) -%}
 
     {%- if model.refs is defined -%}
-        {%- do tag_dict.update(
-            node_refs=[]
-        ) -%}
+        {% set refs = [] %}
         {% for ref in model.refs %}
-            {%- do tag_dict.node_refs.append(ref[0]) -%}
+            {%- do refs.append(ref[0]) -%}
         {% endfor %}
+        {%- do tag_dict.update(
+            node_refs=refs | unique | list
+        ) -%}
     {%- endif -%}
 
     {# dbt Cloud stuff #}
