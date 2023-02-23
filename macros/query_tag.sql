@@ -7,8 +7,8 @@
     {% set tag_dict = config.get('query_tag', default={}) %}
 
     {%- do tag_dict.update(
-        dbt_snowflake_query_tags_version='2.0.0',
         app='dbt',
+        dbt_snowflake_query_tags_version='2.0.0',
     ) -%}
 
     {# We have to bring is_incremental through here because its not available in the comment context #}

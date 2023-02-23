@@ -11,16 +11,35 @@
         invocation_id=invocation_id
     ) -%}
 
-    {%- if node.refs is defined -%}
-        {% set refs = [] %}
-        {% for ref in node.refs %}
-            {%- do refs.append(ref[0]) -%}
-        {% endfor %}
+    {%- if node is not none -%}
         {%- do comment_dict.update(
-            node_refs=refs | unique | list
+            node_name=node.name,
+            node_alias=node.alias,
+            node_package_name=node.package_name,
+            node_original_file_path=node.original_file_path,
+            node_database=node.database,
+            node_schema=node.schema,
+            node_id=node.unique_id,
+            node_resource_type=node.resource_type,
         ) -%}
-    {%- endif -%}
 
+        {%- if node.resource_type != ('seed') -%} {# Otherwise this throws an error saying 'Seeds cannot depend on other nodes.' #}
+            {%- if model.refs is defined -%}
+                {% set refs = [] %}
+                {% for ref in node.refs %}
+                    {%- do refs.append(ref[0]) -%}
+                {% endfor %}
+                {%- do comment_dict.update(
+                    node_refs=refs | unique | list
+                ) -%}
+            {%- endif -%}
+        {%- endif -%}
+        {%- if node.resource_type == 'model' -%}
+            {%- do comment_dict.update(
+                materialized=node.config.materialized,
+            ) -%}
+        {%- endif -%}
+    {%- endif -%}
 
     {%- if env_var('DBT_CLOUD_PROJECT_ID', False) -%}
     {%- do comment_dict.update(
@@ -50,24 +69,6 @@
     {%- do comment_dict.update(
         dbt_cloud_run_reason=env_var('DBT_CLOUD_RUN_REASON')
     ) -%}
-    {%- endif -%}
-
-    {%- if node is not none -%}
-        {%- do comment_dict.update(
-            node_name=node.name,
-            node_alias=node.alias,
-            node_package_name=node.package_name,
-            node_original_file_path=node.original_file_path,
-            node_database=node.database,
-            node_schema=node.schema,
-            node_id=node.unique_id,
-            node_resource_type=node.resource_type,
-        ) -%}
-        {%- if node.resource_type == 'model' -%}
-            {%- do comment_dict.update(
-                materialized=node.config.materialized,
-            ) -%}
-        {%- endif -%}
     {%- endif -%}
 
     {{ return(tojson(comment_dict)) }}
