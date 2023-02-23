@@ -71,7 +71,7 @@ Option 1: If running dbt < 1.2, create a folder named `macros` in your dbt proje
 {% endmacro %}
 ```
 
-Option 2: If running dbt >= 1.2, you can simply configure the dispatch search order in your `dbt_project.yml`.
+Option 2: If running dbt >= 1.2, simply configure the dispatch search order in `dbt_project.yml`.
 
 ```yaml
 dispatch:
@@ -82,7 +82,7 @@ dispatch:
       - dbt
 ```
 
-3. To add the query tags, simply add the following config to `dbt_project.yml`.
+3. To configure the query comments, add the following config to `dbt_project.yml`.
 
 ```yaml
 query-comment:
