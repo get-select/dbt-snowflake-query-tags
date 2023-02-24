@@ -26,6 +26,7 @@ An example query comment contains:
     "node_schema": "dev",
     "node_id": "model.my_project.model_a",
     "node_resource_type": "model",
+    "node_tags": ["tag_1", "tag_2"],
     "materialized": "incremental",
 
     -- dbt Cloud only

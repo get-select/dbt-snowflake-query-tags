@@ -1,4 +1,4 @@
-{{ config(materialized='incremental') }}
+{{ config(materialized='incremental', tags=['a', 'b', 'c']) }}
 
 select 1 as a
 

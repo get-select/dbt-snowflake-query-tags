@@ -21,6 +21,7 @@
             node_schema=node.schema,
             node_id=node.unique_id,
             node_resource_type=node.resource_type,
+            node_tags=node.tags,
         ) -%}
 
         {%- if node.resource_type != ('seed') -%} {# Otherwise this throws an error saying 'Seeds cannot depend on other nodes.' #}
