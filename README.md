@@ -6,7 +6,7 @@ An example query comment contains:
 
 ```json
 {
-    "dbt_snowflake_query_tags_version": "2.0.0",
+    "dbt_snowflake_query_tags_version": "2.0.1",
     "app": "dbt",
     "dbt_version": "1.4.0",
     "project_name": "my_project",
@@ -26,6 +26,7 @@ An example query comment contains:
     "node_schema": "dev",
     "node_id": "model.my_project.model_a",
     "node_resource_type": "model",
+    "node_tags": ["tag_1", "tag_2"],
     "materialized": "incremental",
 
     -- dbt Cloud only
@@ -41,7 +42,7 @@ Query tags are used solely for attaching the `is_incremental` flag, as this isn'
 
 ```json
 {
-    "dbt_snowflake_query_tags_version": "2.0.0",
+    "dbt_snowflake_query_tags_version": "2.0.1",
     "app": "dbt",
     "is_incremental": true
 }

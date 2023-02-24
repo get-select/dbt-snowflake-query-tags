@@ -2,7 +2,7 @@
     {%- set comment_dict = {} -%}
     {%- do comment_dict.update(
         app='dbt',
-        dbt_snowflake_query_tags_version='2.0.0',
+        dbt_snowflake_query_tags_version='2.0.1',
         dbt_version=dbt_version,
         project_name=project_name,
         target_name=target.name,
@@ -21,6 +21,7 @@
             node_schema=node.schema,
             node_id=node.unique_id,
             node_resource_type=node.resource_type,
+            node_tags=node.tags,
         ) -%}
 
         {%- if node.resource_type != ('seed') -%} {# Otherwise this throws an error saying 'Seeds cannot depend on other nodes.' #}
