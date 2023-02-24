@@ -11,3 +11,7 @@ dispatch:
       - dbt_snowflake_query_tags_tests
       - dbt_snowflake_query_tags
       - dbt
+
+query-comment:
+  comment: '{{ dbt_snowflake_query_tags.get_query_comment(node) }}'
+  append: true # Snowflake removes prefixed comments.

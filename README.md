@@ -1,41 +1,50 @@
 # dbt-snowflake-query-tags
 
-From the [SELECT](https://select.dev) team, a dbt package to automatically tag dbt-issued queries with informative metadata. Example metadata is:
+From the [SELECT](https://select.dev) team, a dbt package to automatically tag dbt-issued queries with informative metadata. This package uses both query comments and query tagging.
+
+An example query comment contains:
 
 ```json
 {
-    "dbt_snowflake_query_tags_version": "1.1.3",
+    "dbt_snowflake_query_tags_version": "2.0.0",
     "app": "dbt",
     "dbt_version": "1.4.0",
     "project_name": "my_project",
     "target_name": "dev",
     "target_database": "dev",
-    "target_schema": "larry_goldings",
-    "invocation_id": "c784c7d0-5c3f-4765-805c-0a377fefcaa0",
-    "node_name": "orders",
-    "node_alias": "orders",
+    "target_schema": "dev",
+    "invocation_id": "4ffa20a1-5d90-4a27-a58a-553bb6890f25",
+    "node_refs": [
+        "model_b",
+        "model_c"
+    ],
+    "node_name": "model_a",
+    "node_alias": "model_a",
     "node_package_name": "my_project",
-    "node_original_file_path": "models/staging/orders.sql",
+    "node_original_file_path": "models/model_a.sql",
     "node_database": "dev",
-    "node_schema": "mart",
-    "node_id": "model.my_project.orders",
+    "node_schema": "dev",
+    "node_id": "model.my_project.model_a",
     "node_resource_type": "model",
     "materialized": "incremental",
-    "is_incremental": true,
-    "node_refs": [
-        "raw_orders",
-        "product_mapping"
-    ]
+
+    -- dbt Cloud only
+    "dbt_cloud_project_id": "146126",
+    "dbt_cloud_job_id": "184124",
+    "dbt_cloud_run_id": "107122910",
+    "dbt_cloud_run_reason_category": "other",
+    "dbt_cloud_run_reason": "Kicked off from UI by niall@select.dev",
 }
 ```
 
-When running in dbt Cloud, this package also adds the following metadata:
-```
-dbt_cloud_project_id
-dbt_cloud_job_id
-dbt_cloud_run_id
-dbt_cloud_run_reason_category
-dbt_cloud_run_reason
+Query tags are used solely for attaching the `is_incremental` flag, as this isn't available to the query comment:
+
+```json
+{
+    "dbt_snowflake_query_tags_version": "2.0.0",
+    "app": "dbt",
+    "is_incremental": true
+}
 ```
 
 ## Quickstart
@@ -45,10 +54,10 @@ dbt_cloud_run_reason
 ```yaml
 packages:
   - package: get-select/dbt_snowflake_query_tags
-    version: 1.1.3
+    version: 1.2.0
 ```
 
-2. Adding the macros
+2. Adding the query tags
 
 Option 1: If running dbt < 1.2, create a folder named `macros` in your dbt project's top level directory (if it doesn't exist). Inside, make a new file called `query_tags.sql` with the following content:
 
@@ -62,7 +71,7 @@ Option 1: If running dbt < 1.2, create a folder named `macros` in your dbt proje
 {% endmacro %}
 ```
 
-Option 2: If running dbt >= 1.2, you can simply configure the dispatch search order in your `dbt_project.yml`.
+Option 2: If running dbt >= 1.2, simply configure the dispatch search order in `dbt_project.yml`.
 
 ```yaml
 dispatch:
@@ -71,6 +80,14 @@ dispatch:
       - <YOUR_PROJECT_NAME>
       - dbt_snowflake_query_tags
       - dbt
+```
+
+3. To configure the query comments, add the following config to `dbt_project.yml`.
+
+```yaml
+query-comment:
+  comment: '{{ dbt_snowflake_query_tags.get_query_comment(node) }}'
+  append: true # Snowflake removes prefixed comments.
 ```
 
 That's it! All dbt-issued queries will now be tagged.
