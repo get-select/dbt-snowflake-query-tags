@@ -54,7 +54,7 @@ Query tags are used solely for attaching the `is_incremental` flag, as this isn'
 ```yaml
 packages:
   - package: get-select/dbt_snowflake_query_tags
-    version: 1.2.0
+    version: 2.0.0
 ```
 
 2. Adding the query tags
