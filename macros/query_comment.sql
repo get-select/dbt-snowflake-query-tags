@@ -2,7 +2,7 @@
     {%- set comment_dict = {} -%}
     {%- do comment_dict.update(
         app='dbt',
-        dbt_snowflake_query_tags_version='2.0.0',
+        dbt_snowflake_query_tags_version='2.0.1',
         dbt_version=dbt_version,
         project_name=project_name,
         target_name=target.name,
