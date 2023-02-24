@@ -24,7 +24,7 @@
         ) -%}
 
         {%- if node.resource_type != ('seed') -%} {# Otherwise this throws an error saying 'Seeds cannot depend on other nodes.' #}
-            {%- if model.refs is defined -%}
+            {%- if node.refs is defined -%}
                 {% set refs = [] %}
                 {% for ref in node.refs %}
                     {%- do refs.append(ref[0]) -%}
