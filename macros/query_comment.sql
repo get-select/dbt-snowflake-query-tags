@@ -28,7 +28,11 @@
             {%- if node.refs is defined -%}
                 {% set refs = [] %}
                 {% for ref in node.refs %}
-                    {%- do refs.append(ref[0]) -%}
+                    {%- if dbt_version >= '1.5.0' -%}
+                        {%- do refs.append(ref.name) -%}
+                    {%- else -%}
+                        {%- do refs.append(ref[0]) -%}
+                    {%- endif -%}
                 {% endfor %}
                 {%- do comment_dict.update(
                     node_refs=refs | unique | list

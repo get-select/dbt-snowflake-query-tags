@@ -6,7 +6,7 @@ An example query comment contains:
 
 ```json
 {
-    "dbt_snowflake_query_tags_version": "2.0.1",
+    "dbt_snowflake_query_tags_version": "2.0.2",
     "app": "dbt",
     "dbt_version": "1.4.0",
     "project_name": "my_project",
