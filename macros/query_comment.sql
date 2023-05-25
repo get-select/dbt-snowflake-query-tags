@@ -21,6 +21,7 @@
             node_schema=node.schema,
             node_id=node.unique_id,
             node_resource_type=node.resource_type,
+            node_meta=node.config.meta,
             node_tags=node.tags,
         ) -%}
 
