@@ -6,7 +6,7 @@ An example query comment contains:
 
 ```json
 {
-    "dbt_snowflake_query_tags_version": "2.1.0",
+    "dbt_snowflake_query_tags_version": "2.2.0",
     "app": "dbt",
     "dbt_version": "1.4.0",
     "project_name": "my_project",
@@ -29,6 +29,8 @@ An example query comment contains:
     "node_tags": ["tag_1", "tag_2"],
     "node_meta": {"owner": "@alice", "model_maturity": "in dev"},
     "materialized": "incremental",
+    "full_refresh": false,
+    "which": "run"
 
     -- dbt Cloud only
     "dbt_cloud_project_id": "146126",
