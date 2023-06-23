@@ -23,7 +23,15 @@
             node_resource_type=node.resource_type,
             node_meta=node.config.meta,
             node_tags=node.tags,
+            full_refresh=flags.FULL_REFRESH,
+            which=flags.WHICH,
         ) -%}
+
+        {%- if flags.INVOCATION_COMMAND -%}
+            {%- do comment_dict.update(
+                invocation_command=flags.INVOCATION_COMMAND
+            ) -%}
+        {%- endif -%}
 
         {%- if node.resource_type != ('seed') -%} {# Otherwise this throws an error saying 'Seeds cannot depend on other nodes.' #}
             {%- if node.refs is defined -%}
