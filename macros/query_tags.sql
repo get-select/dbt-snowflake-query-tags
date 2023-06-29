@@ -8,8 +8,15 @@
 
     {%- do tag_dict.update(
         app='dbt',
-        dbt_snowflake_query_tags_version='2.0.1',
+        dbt_snowflake_query_tags_version='2.3.0',
     ) -%}
+
+    {% if thread_id %}
+        {%- do tag_dict.update(
+            thread_id=thread_id
+        ) -%}
+    {% endif %}
+
 
     {# We have to bring is_incremental through here because its not available in the comment context #}
     {% if model.resource_type == 'model' %}
