@@ -8,7 +8,7 @@
 
     {%- do tag_dict.update(
         app='dbt',
-        dbt_snowflake_query_tags_version='2.0.1',
+        dbt_snowflake_query_tags_version='2.3.0',
         thread_id=thread_id
     ) -%}
 
