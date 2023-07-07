@@ -6,7 +6,7 @@ An example query comment contains:
 
 ```json
 {
-    "dbt_snowflake_query_tags_version": "2.2.0",
+    "dbt_snowflake_query_tags_version": "2.3.0",
     "app": "dbt",
     "dbt_version": "1.4.0",
     "project_name": "my_project",
@@ -45,7 +45,7 @@ Query tags are used solely for attaching the `is_incremental` flag, as this isn'
 
 ```json
 {
-    "dbt_snowflake_query_tags_version": "2.1.0",
+    "dbt_snowflake_query_tags_version": "2.3.0",
     "app": "dbt",
     "is_incremental": true
 }
@@ -58,7 +58,7 @@ Query tags are used solely for attaching the `is_incremental` flag, as this isn'
 ```yaml
 packages:
   - package: get-select/dbt_snowflake_query_tags
-    version: 2.1.0
+    version: [">=2.0.0", "<3.0.0"]
 ```
 
 2. Adding the query tags
