@@ -1,11 +1,12 @@
 {{
     config(
         meta={
-            "owner": "@alice", 
+            "owner": "@alice",
             "model_maturity": "in dev"
         },
         materialized="table",
-        tags='a'
+        tags='a',
+        query_tag='data team'
     )
 }}
 
