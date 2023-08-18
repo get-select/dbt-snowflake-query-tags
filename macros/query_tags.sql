@@ -4,15 +4,21 @@
 
 {% macro default__set_query_tag() -%}
     {# Start with any model-configured dict #}
-    {% set tag_dict = config.get('query_tag', default={}) %}
+    {% set query_tag = config.get('query_tag', default={}) %}
 
-    {%- do tag_dict.update(
+    {% if query_tag is not mapping %}
+    {% do log("dbt-snowflake-query-tags warning: the query_tag config value of '{}' is not a mapping type, so is being ignored. If you'd like to add additional query tag information, use a mapping type instead, or remove it to avoid this message.".format(query_tag), True) %}
+    {% set query_tag = {} %} {# If the user has set the query tag config as a non mapping type, start fresh #}
+    {% endif %}
+
+
+    {%- do query_tag.update(
         app='dbt',
         dbt_snowflake_query_tags_version='2.3.0',
     ) -%}
 
     {% if thread_id %}
-        {%- do tag_dict.update(
+        {%- do query_tag.update(
             thread_id=thread_id
         ) -%}
     {% endif %}
@@ -20,15 +26,15 @@
 
     {# We have to bring is_incremental through here because its not available in the comment context #}
     {% if model.resource_type == 'model' %}
-        {%- do tag_dict.update(
+        {%- do query_tag.update(
             is_incremental=is_incremental()
         ) -%}
     {% endif %}
 
-    {% set new_query_tag = tojson(tag_dict) %}
+    {% set query_tag_json = tojson(query_tag) %}
     {% set original_query_tag = get_current_query_tag() %}
-    {{ log("Setting query_tag to '" ~ new_query_tag ~ "'. Will reset to '" ~ original_query_tag ~ "' after materialization.") }}
-    {% do run_query("alter session set query_tag = '{}'".format(new_query_tag)) %}
+    {{ log("Setting query_tag to '" ~ query_tag_json ~ "'. Will reset to '" ~ original_query_tag ~ "' after materialization.") }}
+    {% do run_query("alter session set query_tag = '{}'".format(query_tag_json)) %}
     {{ return(original_query_tag)}}
 {% endmacro %}
 
