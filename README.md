@@ -6,7 +6,7 @@ An example query comment contains:
 
 ```json
 {
-    "dbt_snowflake_query_tags_version": "2.3.0",
+    "dbt_snowflake_query_tags_version": "2.3.1",
     "app": "dbt",
     "dbt_version": "1.4.0",
     "project_name": "my_project",
@@ -45,7 +45,7 @@ Query tags are used solely for attaching the `is_incremental` flag, as this isn'
 
 ```json
 {
-    "dbt_snowflake_query_tags_version": "2.3.0",
+    "dbt_snowflake_query_tags_version": "2.3.1",
     "app": "dbt",
     "is_incremental": true
 }
@@ -95,6 +95,59 @@ query-comment:
 ```
 
 That's it! All dbt-issued queries will now be tagged.
+
+## Adding additional metadata
+
+### Query comments
+
+To extend the information added in the query comments, use [meta](https://docs.getdbt.com/reference/resource-configs/meta) or [tag](https://docs.getdbt.com/reference/resource-configs/tags) configs. These are automatically added to the query comments.
+
+### Query tags
+
+To extend the information added in the query tags, set the [query_tag](https://docs.getdbt.com/reference/resource-configs/snowflake-configs#query-tags) config value to a mapping type. Examples:
+
+#### Compatible config
+
+Model
+```sql
+{{ config(
+    query_tag = {'team': 'data'}
+) }}
+
+select ...
+```
+
+Results in a final query tag of
+```
+'{"team": "data", "app": "dbt", "dbt_snowflake_query_tags_version": "2.3.1", "is_incremental": true}'
+```
+
+the additional information is added by this package.
+
+#### Incompatible config
+
+Using a non-mapping type in the `query_tag` config will result in a warning, and the config being ignored.
+
+Model
+```sql
+{{ config(
+    query_tag = 'data team'
+) }}
+
+select ...
+```
+
+Leads to a warning
+```
+dbt-snowflake-query-tags warning: the query_tag config value of 'data team' is not a mapping type, so is being ignored. If you'd like to add additional query tag information, use a mapping type instead, or remove it to avoid this message.
+```
+
+Results in a final query tag of
+```
+'{"app": "dbt", "dbt_snowflake_query_tags_version": "2.3.1", "is_incremental": false}'
+```
+
+Note that the query_tag value of 'data team' is not present.
 
 ## Contributing
 

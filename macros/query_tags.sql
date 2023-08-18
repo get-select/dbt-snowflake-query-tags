@@ -14,7 +14,7 @@
 
     {%- do query_tag.update(
         app='dbt',
-        dbt_snowflake_query_tags_version='2.3.0',
+        dbt_snowflake_query_tags_version='2.3.1',
     ) -%}
 
     {% if thread_id %}
