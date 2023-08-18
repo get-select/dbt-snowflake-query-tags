@@ -6,7 +6,7 @@
         },
         materialized="table",
         tags='a',
-        query_tag='data team'
+        query_tag="this will generate a warning"
     )
 }}
 
