@@ -15,6 +15,8 @@
     {%- do query_tag.update(
         app='dbt',
         dbt_snowflake_query_tags_version='2.3.1',
+        model=model.name,
+        which=flags.WHICH,
     ) -%}
 
     {% if thread_id %}
@@ -27,7 +29,14 @@
     {# We have to bring is_incremental through here because its not available in the comment context #}
     {% if model.resource_type == 'model' %}
         {%- do query_tag.update(
-            is_incremental=is_incremental()
+            is_incremental=is_incremental(),
+            model=model.name,
+            model_alias=model.alias|string,
+            model_database=model.database|string,
+            model_schema=model.schema|string,
+            model_materialized=model.config.materialized|string,
+            model_cluster_key=model.config.cluster_by|string,
+            model_fqn=tojson(model.fqn)
         ) -%}
     {% endif %}
 
