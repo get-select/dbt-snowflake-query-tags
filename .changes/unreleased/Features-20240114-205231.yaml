@@ -1,0 +1,6 @@
+kind: Features
+body: Support for query tags from profiles.yml and environment variables
+time: 2024-01-14T20:52:31.0834294+02:00
+custom:
+  Author: maddoc1
+  PR: "21"
