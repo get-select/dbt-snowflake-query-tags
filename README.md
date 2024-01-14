@@ -118,6 +118,7 @@ select ...
 ```
 
 Additionaly, you can set the query_tag in the profiles.yml:
+
 profiles.yml
 ```yml
 default:
@@ -131,6 +132,7 @@ default:
 Another option is to use the optional project variable `env_vars_to_query_tag_list` that will have a list of environment variables to create the query tags from.
 
 Example:
+
 dbt_project.yml:
 ```yml
   vars:
