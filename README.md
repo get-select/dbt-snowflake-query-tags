@@ -117,7 +117,7 @@ Model
 select ...
 ```
 
-Additionaly, you can set the query_tag in the profiles.yml:
+Additionally, you can set the `query_tag` in the `profiles.yml`:
 
 profiles.yml
 ```yml
