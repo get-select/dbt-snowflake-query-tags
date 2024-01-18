@@ -5,11 +5,11 @@
 {% macro default__set_query_tag() -%}
     {# Get session level query tag #}
     {% set session_query_tag = get_current_query_tag() %}
-    {% set session_query_tag_json = {} %}
+    {% set session_query_tag_parsed = {} %}
 
     {% if session_query_tag %}
         {% if fromjson(session_query_tag) is mapping %}
-            {% set session_query_tag_json = fromjson(session_query_tag) %}
+            {% set session_query_tag_parsed = fromjson(session_query_tag) %}
         {% else %}
             {% do log("dbt-snowflake-query-tags warning: the session level query tag value of '{}' is not a mapping type, so is being ignored. If you'd like to add additional query tag information, use a mapping type instead, or remove it to avoid this message.".format(session_query_tag), True) %}
         {% endif %}
@@ -32,7 +32,7 @@
     {% set query_tag = {} %} {# If the user has set the query tag config as a non mapping type, start fresh #}
     {% endif %}
 
-    {% do query_tag.update(session_query_tag_json) %}
+    {% do query_tag.update(session_query_tag_parsed) %}
     {% do query_tag.update(env_var_query_tags) %}
 
     {%- do query_tag.update(
