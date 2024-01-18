@@ -6,7 +6,7 @@ An example query comment contains:
 
 ```json
 {
-    "dbt_snowflake_query_tags_version": "2.3.1",
+    "dbt_snowflake_query_tags_version": "2.3.2",
     "app": "dbt",
     "dbt_version": "1.4.0",
     "project_name": "my_project",
@@ -45,7 +45,7 @@ Query tags are used solely for attaching the `is_incremental` flag, as this isn'
 
 ```json
 {
-    "dbt_snowflake_query_tags_version": "2.3.1",
+    "dbt_snowflake_query_tags_version": "2.3.2",
     "app": "dbt",
     "is_incremental": true
 }
@@ -100,7 +100,15 @@ That's it! All dbt-issued queries will now be tagged.
 
 ### Query comments
 
-To extend the information added in the query comments, use [meta](https://docs.getdbt.com/reference/resource-configs/meta) or [tag](https://docs.getdbt.com/reference/resource-configs/tags) configs. These are automatically added to the query comments.
+Both [meta](https://docs.getdbt.com/reference/resource-configs/meta) and [tag](https://docs.getdbt.com/reference/resource-configs/tags) configs are automatically added to the query comments.
+
+To add arbitrary keys and values to the comments, you can use the `extra` kwarg when calling `dbt_snowflake_query_tags.get_query_comment`. For example, to add a `run_started_at` key and value to the comment, we can do:
+
+```yaml
+query-comment:
+  comment: '{{ dbt_snowflake_query_tags.get_query_comment(node, extra={"run_started_at": builtins.run_started_at | string }) }}'
+  append: true # Snowflake removes prefixed comments.
+```
 
 ### Query tags
 
@@ -119,7 +127,7 @@ select ...
 
 Results in a final query tag of
 ```
-'{"team": "data", "app": "dbt", "dbt_snowflake_query_tags_version": "2.3.1", "is_incremental": true}'
+'{"team": "data", "app": "dbt", "dbt_snowflake_query_tags_version": "2.3.2", "is_incremental": true}'
 ```
 
 the additional information is added by this package.
@@ -144,7 +152,7 @@ dbt-snowflake-query-tags warning: the query_tag config value of 'data team' is n
 
 Results in a final query tag of
 ```
-'{"app": "dbt", "dbt_snowflake_query_tags_version": "2.3.1", "is_incremental": false}'
+'{"app": "dbt", "dbt_snowflake_query_tags_version": "2.3.2", "is_incremental": false}'
 ```
 
 Note that the query_tag value of 'data team' is not present.
