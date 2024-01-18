@@ -104,9 +104,11 @@ To extend the information added in the query comments, use [meta](https://docs.g
 
 ### Query tags
 
-To extend the information added in the query tags, set the [query_tag](https://docs.getdbt.com/reference/resource-configs/snowflake-configs#query-tags) config value to a mapping type. Examples:
+To extend the information added in the query tags, there are a few options:
 
 #### Model config
+
+Set the [query_tag](https://docs.getdbt.com/reference/resource-configs/snowflake-configs#query-tags) config value to a mapping type. Example:
 
 Model
 ```sql
@@ -117,7 +119,7 @@ Model
 select ...
 ```
 
-Using a non-mapping type in the `query_tag` config will result in a warning, and the config being ignored.
+Note that using a non-mapping type in the `query_tag` config will result in a warning, and the config being ignored.
 
 Model
 ```sql
@@ -133,10 +135,7 @@ Warning:
 dbt-snowflake-query-tags warning: the query_tag config value of 'data team' is not a mapping type, so is being ignored. If you'd like to add additional query tag information, use a mapping type instead, or remove it to avoid this message.
 ```
 
-This results in a final query tag without the query_tag key-value.
-```
-'{"app": "dbt", "dbt_snowflake_query_tags_version": "2.3.1", "is_incremental": false}'
-```
+This results in a final query tag without 'data team' being present.
 
 #### Profiles.yml
 
