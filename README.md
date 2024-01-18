@@ -104,9 +104,11 @@ To extend the information added in the query comments, use [meta](https://docs.g
 
 ### Query tags
 
-To extend the information added in the query tags, set the [query_tag](https://docs.getdbt.com/reference/resource-configs/snowflake-configs#query-tags) config value to a mapping type. Examples:
+To extend the information added in the query tags, there are a few options:
 
-#### Compatible config
+#### Model config
+
+Set the [query_tag](https://docs.getdbt.com/reference/resource-configs/snowflake-configs#query-tags) config value to a mapping type. Example:
 
 Model
 ```sql
@@ -117,16 +119,7 @@ Model
 select ...
 ```
 
-Results in a final query tag of
-```
-'{"team": "data", "app": "dbt", "dbt_snowflake_query_tags_version": "2.3.1", "is_incremental": true}'
-```
-
-the additional information is added by this package.
-
-#### Incompatible config
-
-Using a non-mapping type in the `query_tag` config will result in a warning, and the config being ignored.
+Note that using a non-mapping type in the `query_tag` config will result in a warning, and the config being ignored.
 
 Model
 ```sql
@@ -137,17 +130,43 @@ Model
 select ...
 ```
 
-Leads to a warning
+Warning:
 ```
 dbt-snowflake-query-tags warning: the query_tag config value of 'data team' is not a mapping type, so is being ignored. If you'd like to add additional query tag information, use a mapping type instead, or remove it to avoid this message.
 ```
 
-Results in a final query tag of
-```
-'{"app": "dbt", "dbt_snowflake_query_tags_version": "2.3.1", "is_incremental": false}'
+This results in a final query tag without 'data team' being present.
+
+#### Profiles.yml
+
+Additionally, you can set the `query_tag` in the `profiles.yml`. This must be a valid json object.
+
+profiles.yml
+```yml
+default:
+  outputs:
+    dev:
+      query_tag: '{"team": "data"}'
+      ...
+  target: dev
 ```
 
-Note that the query_tag value of 'data team' is not present.
+#### Environment variables
+
+Another option is to use the optional project variable `env_vars_to_query_tag_list` to provide a list of environment variables to pull query tag values from.
+
+Example:
+
+dbt_project.yml:
+```yml
+  vars:
+    env_vars_to_query_tag_list: ['TEAM','JOB_NAME']
+```
+
+Results in a final query tag of
+```
+'{"team": "data", "job_name": "daily", "app": "dbt", "dbt_snowflake_query_tags_version": "2.3.1", "is_incremental": true}'
+```
 
 ## Contributing
 
