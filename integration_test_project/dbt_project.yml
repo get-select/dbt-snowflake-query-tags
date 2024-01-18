@@ -13,5 +13,5 @@ dispatch:
       - dbt
 
 query-comment:
-  comment: '{{ dbt_snowflake_query_tags.get_query_comment(node) }}'
+  comment: '{{ dbt_snowflake_query_tags.get_query_comment(node, extra={"run_started_at": builtins.run_started_at | string }) }}'
   append: true # Snowflake removes prefixed comments.

@@ -6,7 +6,7 @@ An example query comment contains:
 
 ```json
 {
-    "dbt_snowflake_query_tags_version": "2.3.1",
+    "dbt_snowflake_query_tags_version": "2.3.2",
     "app": "dbt",
     "dbt_version": "1.4.0",
     "project_name": "my_project",
@@ -45,7 +45,7 @@ Query tags are used solely for attaching the `is_incremental` flag, as this isn'
 
 ```json
 {
-    "dbt_snowflake_query_tags_version": "2.3.1",
+    "dbt_snowflake_query_tags_version": "2.3.2",
     "app": "dbt",
     "is_incremental": true
 }
@@ -100,7 +100,15 @@ That's it! All dbt-issued queries will now be tagged.
 
 ### Query comments
 
-To extend the information added in the query comments, use [meta](https://docs.getdbt.com/reference/resource-configs/meta) or [tag](https://docs.getdbt.com/reference/resource-configs/tags) configs. These are automatically added to the query comments.
+Both [meta](https://docs.getdbt.com/reference/resource-configs/meta) and [tag](https://docs.getdbt.com/reference/resource-configs/tags) configs are automatically added to the query comments.
+
+To add arbitrary keys and values to the comments, you can use the `extra` kwarg when calling `dbt_snowflake_query_tags.get_query_comment`. For example, to add a `run_started_at` key and value to the comment, we can do:
+
+```yaml
+query-comment:
+  comment: '{{ dbt_snowflake_query_tags.get_query_comment(node, extra={"run_started_at": builtins.run_started_at | string }) }}'
+  append: true # Snowflake removes prefixed comments.
+```
 
 ### Query tags
 
@@ -119,6 +127,11 @@ Model
 select ...
 ```
 
+Results in the following query tag. The additional information is added by this package.
+```
+'{"team": "data", "app": "dbt", "dbt_snowflake_query_tags_version": "2.3.2", "is_incremental": true}'
+```
+
 Note that using a non-mapping type in the `query_tag` config will result in a warning, and the config being ignored.
 
 Model
@@ -135,11 +148,9 @@ Warning:
 dbt-snowflake-query-tags warning: the query_tag config value of 'data team' is not a mapping type, so is being ignored. If you'd like to add additional query tag information, use a mapping type instead, or remove it to avoid this message.
 ```
 
-This results in a final query tag without 'data team' being present.
-
 #### Profiles.yml
 
-Additionally, you can set the `query_tag` in the `profiles.yml`. This must be a valid json object.
+Additionally, you can set the `query_tag` value in the `profiles.yml`. This must be a valid json object.
 
 profiles.yml
 ```yml
@@ -165,7 +176,7 @@ dbt_project.yml:
 
 Results in a final query tag of
 ```
-'{"team": "data", "job_name": "daily", "app": "dbt", "dbt_snowflake_query_tags_version": "2.3.1", "is_incremental": true}'
+'{"team": "data", "job_name": "daily", "app": "dbt", "dbt_snowflake_query_tags_version": "2.3.2", "is_incremental": true}'
 ```
 
 ## Contributing
