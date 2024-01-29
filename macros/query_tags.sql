@@ -10,8 +10,6 @@
     {% if original_query_tag %}
         {% if fromjson(original_query_tag) is mapping %}
             {% set original_query_tag_parsed = fromjson(original_query_tag) %}
-        {% else %}
-            {% do log("dbt-snowflake-query-tags warning: the session level query tag value of '{}' is not a mapping type, so is being ignored. If you'd like to add additional query tag information, use a mapping type instead, or remove it to avoid this message.".format(original_query_tag), True) %}
         {% endif %}
     {% endif %}
 
@@ -37,7 +35,7 @@
 
     {%- do query_tag.update(
         app='dbt',
-        dbt_snowflake_query_tags_version='2.3.2',
+        dbt_snowflake_query_tags_version='2.3.3',
     ) -%}
 
     {% if thread_id %}
