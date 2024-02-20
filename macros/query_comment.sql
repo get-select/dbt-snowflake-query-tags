@@ -11,6 +11,12 @@
         invocation_id=invocation_id
     ) -%}
 
+    {% if thread_id %}
+        {%- do comment_dict.update(
+            thread_id=thread_id
+        ) -%}
+    {% endif %}
+
     {%- if node is not none -%}
         {%- do comment_dict.update(
             node_name=node.name,
