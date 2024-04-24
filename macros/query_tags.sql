@@ -36,7 +36,7 @@
     {%- do query_tag.update(
         app='dbt',
         dbt_snowflake_query_tags_version='2.3.3',
-        node=model.name,
+        node_name=model.name,
     ) -%}
 
     {% if thread_id %}
