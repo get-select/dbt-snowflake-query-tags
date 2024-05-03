@@ -53,36 +53,43 @@
                 materialized=node.config.materialized,
             ) -%}
         {%- endif -%}
+
+        {# New step to add dbt_raw_code_hash if node.raw_code exists #}
+        {%- if node.raw_code is not none -%}
+            {%- do comment_dict.update({
+                "dbt_raw_code_hash": local_md5(node.raw_code)
+            }) -%}
+        {%- endif -%}
     {%- endif -%}
 
     {%- if env_var('DBT_CLOUD_PROJECT_ID', False) -%}
-    {%- do comment_dict.update(
-        dbt_cloud_project_id=env_var('DBT_CLOUD_PROJECT_ID')
-    ) -%}
+        {%- do comment_dict.update(
+            dbt_cloud_project_id=env_var('DBT_CLOUD_PROJECT_ID')
+        ) -%}
     {%- endif -%}
 
     {%- if env_var('DBT_CLOUD_JOB_ID', False) -%}
-    {%- do comment_dict.update(
-        dbt_cloud_job_id=env_var('DBT_CLOUD_JOB_ID')
-    ) -%}
+        {%- do comment_dict.update(
+            dbt_cloud_job_id=env_var('DBT_CLOUD_JOB_ID')
+        ) -%}
     {%- endif -%}
 
     {%- if env_var('DBT_CLOUD_RUN_ID', False) -%}
-    {%- do comment_dict.update(
-        dbt_cloud_run_id=env_var('DBT_CLOUD_RUN_ID')
-    ) -%}
+        {%- do comment_dict.update(
+            dbt_cloud_run_id=env_var('DBT_CLOUD_RUN_ID')
+        ) -%}
     {%- endif -%}
 
     {%- if env_var('DBT_CLOUD_RUN_REASON_CATEGORY', False) -%}
-    {%- do comment_dict.update(
-        dbt_cloud_run_reason_category=env_var('DBT_CLOUD_RUN_REASON_CATEGORY')
-    ) -%}
+        {%- do comment_dict.update(
+            dbt_cloud_run_reason_category=env_var('DBT_CLOUD_RUN_REASON_CATEGORY')
+        ) -%}
     {%- endif -%}
 
     {%- if env_var('DBT_CLOUD_RUN_REASON', False) -%}
-    {%- do comment_dict.update(
-        dbt_cloud_run_reason=env_var('DBT_CLOUD_RUN_REASON')
-    ) -%}
+        {%- do comment_dict.update(
+            dbt_cloud_run_reason=env_var('DBT_CLOUD_RUN_REASON')
+        ) -%}
     {%- endif -%}
 
     {{ return(tojson(comment_dict)) }}
