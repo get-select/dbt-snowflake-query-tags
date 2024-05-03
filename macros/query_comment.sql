@@ -54,7 +54,6 @@
             ) -%}
         {%- endif -%}
 
-        {# New step to add dbt_raw_code_hash if node.raw_code exists #}
         {%- if node.raw_code is not none -%}
             {%- do comment_dict.update({
                 "dbt_raw_code_hash": local_md5(node.raw_code)
