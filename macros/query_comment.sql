@@ -23,6 +23,7 @@
             node_resource_type=node.resource_type,
             node_meta=node.config.meta,
             node_tags=node.tags,
+            run_started_at=run_started_at.strftime("%Y-%m-%d %H:%M:%S"),
             full_refresh=flags.FULL_REFRESH,
             which=flags.WHICH,
         ) -%}
