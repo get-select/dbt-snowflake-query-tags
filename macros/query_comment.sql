@@ -56,7 +56,7 @@
 
         {%- if node.raw_code is not none -%}
             {%- do comment_dict.update({
-                "dbt_raw_code_hash": local_md5(node.raw_code)
+                "raw_code_hash": local_md5(node.raw_code)
             }) -%}
         {%- endif -%}
     {%- endif -%}
