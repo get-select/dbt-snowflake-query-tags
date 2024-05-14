@@ -23,6 +23,7 @@
             node_resource_type=node.resource_type,
             node_meta=node.config.meta,
             node_tags=node.tags,
+            run_started_at=run_started_at.astimezone(modules.pytz.utc).isoformat(),
             full_refresh=flags.FULL_REFRESH,
             which=flags.WHICH,
         ) -%}
