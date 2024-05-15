@@ -100,7 +100,11 @@ That's it! All dbt-issued queries will now be tagged.
 
 ### Query comments
 
+#### Meta and tag model configs
+
 Both [meta](https://docs.getdbt.com/reference/resource-configs/meta) and [tag](https://docs.getdbt.com/reference/resource-configs/tags) configs are automatically added to the query comments.
+
+#### 'extra' kwarg
 
 To add arbitrary keys and values to the comments, you can use the `extra` kwarg when calling `dbt_snowflake_query_tags.get_query_comment`. For example, to add a `run_started_at` key and value to the comment, we can do:
 
@@ -177,6 +181,24 @@ dbt_project.yml:
 Results in a final query tag of
 ```
 '{"team": "data", "job_name": "daily", "app": "dbt", "dbt_snowflake_query_tags_version": "2.3.2", "is_incremental": true}'
+```
+
+#### 'extra' kwarg
+
+Like the query comment macro, the query tag macro also supports an 'extra' kwarg. To make use of it, you'll need to configure this package following the dbt < 1.2 instructions. Then you can add any logic you like for additional query tag metadata in `query_tags.sql`.
+
+```
+{% macro set_query_tag() -%}
+    {% do return(dbt_snowflake_query_tags.set_query_tag(
+        extra={
+            'custom_config_property': config.get('custom_config_property'),
+        }
+    )) %}
+{% endmacro %}
+
+{% macro unset_query_tag(original_query_tag) -%}
+    {% do return(dbt_snowflake_query_tags.unset_query_tag(original_query_tag)) %}
+{% endmacro %}
 ```
 
 ## Contributing
