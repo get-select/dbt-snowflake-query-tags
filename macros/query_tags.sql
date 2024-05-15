@@ -1,8 +1,8 @@
-{% macro set_query_tag() -%}
-    {{ return(adapter.dispatch('set_query_tag', 'dbt_snowflake_query_tags')()) }}
+{% macro set_query_tag(extra = {}) -%}
+    {{ return(adapter.dispatch('set_query_tag', 'dbt_snowflake_query_tags')(extra=extra)) }}
 {%- endmacro %}
 
-{% macro default__set_query_tag() -%}
+{% macro default__set_query_tag(extra = {}) -%}
     {# Get session level query tag #}
     {% set original_query_tag = get_current_query_tag() %}
     {% set original_query_tag_parsed = {} %}
@@ -32,10 +32,11 @@
 
     {% do query_tag.update(original_query_tag_parsed) %}
     {% do query_tag.update(env_var_query_tags) %}
+    {% do query_tag.update(extra) %}
 
     {%- do query_tag.update(
         app='dbt',
-        dbt_snowflake_query_tags_version='2.4.1',
+        dbt_snowflake_query_tags_version='2.5.0',
     ) -%}
 
     {% if thread_id %}
