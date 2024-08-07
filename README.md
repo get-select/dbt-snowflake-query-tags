@@ -114,6 +114,25 @@ query-comment:
   append: true # Snowflake removes prefixed comments.
 ```
 
+#### Adding env vars to query comments
+
+Here's an example of how you can add environment variables into the query comment:
+
+```sql
+query-comment:
+  comment: >
+    {{ dbt_snowflake_query_tags.get_query_comment(
+      node,
+      extra={
+        'CI_PIPELINE_ID': env_var('CI_PIPELINE_ID'),
+        'CI_JOB_NAME': env_var('CI_JOB_NAME'),
+        'CI_COMMIT_REF_NAME': env_var('CI_COMMIT_REF_NAME'),
+        'CI_RUNNER_TAGS': env_var('CI_RUNNER_TAGS')
+      }
+    ) }}
+  append: true # Snowflake removes prefixed comments.
+```
+
 ### Query tags
 
 To extend the information added in the query tags, there are a few options:
