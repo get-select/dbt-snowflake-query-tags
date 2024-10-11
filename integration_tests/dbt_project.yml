@@ -2,7 +2,7 @@ name: 'dbt_snowflake_query_tags_tests'
 version: '1.0.0'
 config-version: 2
 
-profile: dbt_snowflake_query_tags_tests
+profile: integration_tests
 
 
 dispatch:
