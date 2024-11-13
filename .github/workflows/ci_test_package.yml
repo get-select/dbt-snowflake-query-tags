@@ -8,14 +8,15 @@ on:
 
 env:
   # These are configured in GitHub secrets
-  DBT_PROFILES_DIR: /home/runner/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/integration_test_project
+  DBT_PROFILES_DIR: /home/runner/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/integration_tests
   GITHUB_SHA_OVERRIDE: ${{ github.event.pull_request.head.sha }} # We need the commit hash of the pull request branch's head, the GITHUB_SHA env var is always the base branch in a pull_request_target trigger
-  DBT_ENV_SECRET_SNOWFLAKE_TEST_ACCOUNT: ${{ secrets.SNOWFLAKE_TEST_ACCOUNT }}
-  DBT_ENV_SECRET_SNOWFLAKE_TEST_USER: ${{ secrets.SNOWFLAKE_TEST_USER }}
-  DBT_ENV_SECRET_SNOWFLAKE_TEST_PASSWORD: ${{ secrets.SNOWFLAKE_TEST_PASSWORD }}
-  DBT_ENV_SECRET_SNOWFLAKE_TEST_ROLE: ${{ secrets.SNOWFLAKE_TEST_ROLE }}
-  DBT_ENV_SECRET_SNOWFLAKE_TEST_DATABASE: ${{ secrets.SNOWFLAKE_TEST_DATABASE }}
-  DBT_ENV_SECRET_SNOWFLAKE_TEST_WAREHOUSE: ${{ secrets.SNOWFLAKE_TEST_WAREHOUSE }}
+  SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_TEST_ACCOUNT }}
+  SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_TEST_USER }}
+  DBT_ENV_SECRET_SNOWFLAKE_PASS: ${{ secrets.SNOWFLAKE_TEST_PASSWORD }}
+  SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_TEST_ROLE }}
+  SNOWFLAKE_DATABASE: ${{ secrets.SNOWFLAKE_TEST_DATABASE }}
+  SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_TEST_WAREHOUSE }}
+  SNOWFLAKE_SCHEMA: "integration_tests_snowflake_${{ github.run_number }}"
 
 
 jobs:

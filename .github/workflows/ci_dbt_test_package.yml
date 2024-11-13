@@ -1,0 +1,30 @@
+# **what?**
+# Run tests for dbt-snowflake-query-tags against supported adapters
+
+# **why?**
+# To ensure that dbt-snowflake-query-tags works as expected with all supported adapters
+
+# **when?**
+# On every PR, and every push to main and when manually triggered
+
+name: Package Integration Tests
+
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+    workflow_dispatch:
+
+jobs:
+  run-tests:
+      uses: dbt-labs/dbt-package-testing/.github/workflows/run_tox.yml@v1
+      with:
+        SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_TEST_USER }}
+        SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_TEST_ROLE }}
+        SNOWFLAKE_DATABASE: ${{ secrets.SNOWFLAKE_TEST_DATABASE }}
+        SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_TEST_WAREHOUSE }}
+        SNOWFLAKE_SCHEMA: "integration_tests_snowflake_${{ github.run_number }}"
+      secrets:
+        SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_TEST_ACCOUNT }}
+        DBT_ENV_SECRET_SNOWFLAKE_PASS: ${{ secrets.SNOWFLAKE_TEST_PASSWORD }}
