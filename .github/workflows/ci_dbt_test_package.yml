@@ -20,10 +20,10 @@ jobs:
   run-tests:
       uses: dbt-labs/dbt-package-testing/.github/workflows/run_tox.yml@v1
       with:
-        SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_TEST_USER }}
-        SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_TEST_ROLE }}
-        SNOWFLAKE_DATABASE: ${{ secrets.SNOWFLAKE_TEST_DATABASE }}
-        SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_TEST_WAREHOUSE }}
+        SNOWFLAKE_USER: ${{ vars.SNOWFLAKE_TEST_USER }}
+        SNOWFLAKE_ROLE: ${{ vars.SNOWFLAKE_TEST_ROLE }}
+        SNOWFLAKE_DATABASE: ${{ vars.SNOWFLAKE_TEST_DATABASE }}
+        SNOWFLAKE_WAREHOUSE: ${{ vars.SNOWFLAKE_TEST_WAREHOUSE }}
         SNOWFLAKE_SCHEMA: "integration_tests_snowflake_${{ github.run_number }}"
       secrets:
         SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_TEST_ACCOUNT }}
