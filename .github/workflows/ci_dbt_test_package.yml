@@ -1,5 +1,5 @@
 # **what?**
-# Run tests for dbt-snowflake-query-tags against supported adapters
+# Run tests for dbt-snowflake-query-tags against supported adapters (snowflake)
 
 # **why?**
 # To ensure that dbt-snowflake-query-tags works as expected with all supported adapters
