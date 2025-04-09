@@ -173,14 +173,15 @@ dbt-snowflake-query-tags warning: the query_tag config value of 'data team' is n
 
 #### Profiles.yml
 
-Additionally, you can set the `query_tag` value in the `profiles.yml`. This must be a valid json object.
+Additionally, you can set the `query_tag` value in the `profiles.yml`. This must be a valid mapping, not a string.
 
 profiles.yml
 ```yml
 default:
   outputs:
     dev:
-      query_tag: '{"team": "data"}'
+      +query_tag:
+        team: data
       ...
   target: dev
 ```
