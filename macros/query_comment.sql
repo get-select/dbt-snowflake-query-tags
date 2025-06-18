@@ -38,7 +38,8 @@
             {%- if node.refs is defined -%}
                 {% set refs = [] %}
                 {% for ref in node.refs %}
-                    {%- if dbt_version >= '1.5.0' -%}
+                    {%- if (dbt_version.split('.')[0] | int > 1)
+                       or (dbt_version.split('.')[0] | int == 1 and dbt_version.split('.')[1] | int >= 5) -%}
                         {%- do refs.append(ref.name) -%}
                     {%- else -%}
                         {%- do refs.append(ref[0]) -%}
