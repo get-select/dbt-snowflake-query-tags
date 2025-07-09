@@ -4,6 +4,10 @@ config-version: 2
 
 profile: integration_tests
 
+flags:
+  send_anonymous_usage_stats: false
+  use_colors: true
+
 dispatch:
   - macro_namespace: dbt
     search_order:
@@ -14,7 +18,3 @@ dispatch:
 query-comment:
   comment: '{{ dbt_snowflake_query_tags.get_query_comment(node, extra={"run_started_at": builtins.run_started_at | string }) }}'
   append: true # Snowflake removes prefixed comments.
-
-flags:
-  send_anonymous_usage_stats: false
-  use_colors: true
