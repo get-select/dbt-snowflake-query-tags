@@ -228,4 +228,9 @@ We use changie to generate CHANGELOG entries. Note: Do not edit the CHANGELOG.md
 
 Follow the steps to [install changie](https://changie.dev/guide/installation/) for your system.
 
-Once changie is installed and your PR is created, simply run `changie new` and changie will walk you through the process of creating a changelog entry. Commit the file that's created and your changelog entry is complete!
+Once changie is installed and your PR is created, simply run these changie commands:
+1. `changie new`: changie will walk you through the process of creating a changelog entry.
+2. `changeie batch x.x.x` where x.x.x is the new version needed.  You can chech the `.changes` folder to know the next version number.
+3. `changie merge`
+
+Next, update `dbt_project.yaml` with the new version number.
