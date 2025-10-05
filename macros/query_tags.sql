@@ -22,14 +22,32 @@
         {% endfor %}
     {% endif %}
 
+    {% set project_tag = model.config.get('query_tag', {}) %}
+    {% set model_tag = config.get('query_tag', {}) %}
+
     {# Start with any model-configured dict #}
     {% set query_tag = config.get('query_tag', default={}) %}
 
-    {% if query_tag is not mapping %}
-    {% do log("dbt-snowflake-query-tags warning: the query_tag config value of '{}' is not a mapping type, so is being ignored. If you'd like to add additional query tag information, use a mapping type instead, or remove it to avoid this message.".format(query_tag), True) %}
-    {% set query_tag = {} %} {# If the user has set the query tag config as a non mapping type, start fresh #}
+    {% if not project_tag is mapping %}
+        {% do log("dbt-snowflake-query-tags warning: the query_tag config value of '{}' is not a mapping type, so is being ignored. If you'd like to add additional query tag information, use a mapping type instead, or remove it to avoid this message.".format(query_tag), True) %}
+
+            {% set project_tag = {} %}
+     {% endif %}
+
+     {% if not model_tag is mapping %}
+         {% do log("dbt-snowflake-query-tags warning: the query_tag config value of '{}' is not a mapping type, so is being ignored. If you'd like to add additional query tag information, use a mapping type instead, or remove it to avoid this message.".format(query_tag), True) %}
+
+        {% set model_tag = {} %}
     {% endif %}
 
+    {# Manual merge: model-level overrides project-level #}
+    {% set query_tag = project_tag.copy() %}
+    {% for k, v in model_tag.items() %}
+        {% do query_tag.update({k: v}) %}
+    {% endfor %}
+
+
+    {# --- Step 4: Add session/original/env_var/extra tags (keep package behavior) --- #}
     {% do query_tag.update(original_query_tag_parsed) %}
     {% do query_tag.update(env_var_query_tags) %}
     {% do query_tag.update(extra) %}
