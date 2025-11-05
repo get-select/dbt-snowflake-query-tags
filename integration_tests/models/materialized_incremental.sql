@@ -1,4 +1,4 @@
-{{ config(materialized='incremental', tags=['a', 'b', 'c'], query_tag={'test': 'test'}) }}
+{{ config(materialized='incremental', tags=['a', 'b', 'c'], query_tag="{'test': 'test'}") }}
 
 select 1 as a
 
