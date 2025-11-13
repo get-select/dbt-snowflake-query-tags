@@ -25,6 +25,11 @@
     {# Start with any model-configured dict #}
     {% set query_tag = config.get('query_tag', default={}) %}
 
+    {# Handle the case where the query tag is a dict but quoted. This is required for Fusion. #}
+    {% if query_tag is string and fromjson(query_tag[1:-1]) is mapping %}
+        {% set query_tag = fromjson(query_tag[1:-1]) %}
+    {% endif %}
+
     {% if query_tag is not mapping %}
     {% do log("dbt-snowflake-query-tags warning: the query_tag config value of '{}' is not a mapping type, so is being ignored. If you'd like to add additional query tag information, use a mapping type instead, or remove it to avoid this message.".format(query_tag), True) %}
     {% set query_tag = {} %} {# If the user has set the query tag config as a non mapping type, start fresh #}

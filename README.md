@@ -141,10 +141,19 @@ To extend the information added in the query tags, there are a few options:
 
 Set the [query_tag](https://docs.getdbt.com/reference/resource-configs/snowflake-configs#query-tags) config value to a mapping type. Example:
 
-Model
+Model (works for dbt Core)
 ```sql
 {{ config(
     query_tag = {'team': 'data'}
+) }}
+
+select ...
+```
+
+or (works for dbt Core and Fusion)
+```sql
+{{ config(
+    query_tag = "{'team': 'data'}"
 ) }}
 
 select ...
