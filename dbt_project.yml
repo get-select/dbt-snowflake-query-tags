@@ -1,3 +1,5 @@
 name: 'dbt_snowflake_query_tags'
 version: '2.5.4'
 config-version: 2
+flags:
+  require_generic_test_arguments_property: true # add dbt-autoifix suggestion
