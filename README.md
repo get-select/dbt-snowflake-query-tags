@@ -1,5 +1,8 @@
 # dbt-snowflake-query-tags
 
+> [!WARNING]
+> ⚠️ **This package has been deprecated.** Please use [dbt-query-tags](https://github.com/get-select/dbt-query-tags) instead, which supports multiple platforms. This repository is no longer maintained.
+
 From the [SELECT](https://select.dev) team, a dbt package to automatically tag dbt-issued queries with informative metadata. This package uses both query comments and query tagging.
 
 An example query comment contains:
